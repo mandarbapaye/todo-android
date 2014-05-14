@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <CheckedTextView
+        android:id="@+id/ctvTodoItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:checked="false"
+        android:paddingTop="@dimen/todo_item_top_margin" />
+
+    <TextView
+        android:id="@+id/tvTodoItemDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/todo_item_bottom_margin"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</LinearLayout>

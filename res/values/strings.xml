@@ -10,5 +10,7 @@
     <string name="edit_item_label">Edit Item Below:</string>
     <string name="save_label">Save</string>
     <string name="invalid_blank_item_label">Blank item cant be added.</string>
+    <string name="delete_lable">Delete</string>
+    <string name="edit_label">Edit</string>
 
 </resources>
