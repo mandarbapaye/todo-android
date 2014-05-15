@@ -13,6 +13,7 @@ import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -39,7 +40,7 @@ public class ToDoMainActivity extends Activity {
 	private static final int REQUEST_CODE = 20;
 	
 	// Tracks current menu item
-	private int currentListItemIndex;
+	private int currentListItemIndex = -1;
 	// Tracks current contextual action mode
 	private ActionMode currentActionMode;
 
@@ -88,12 +89,19 @@ public class ToDoMainActivity extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parentContainerView, View v,
 										   int pos, long id) {			
+
+				if (currentListItemIndex != -1) {
+					parentContainerView.getChildAt(currentListItemIndex).setBackgroundColor(Color.TRANSPARENT);
+				}
+				
 				if (currentActionMode != null) { 
 					currentActionMode.finish();
 				}
+				
 		        currentListItemIndex = pos;
 		        currentActionMode = startActionMode(modeCallBack);
 		        v.setSelected(true);
+		        v.setBackgroundColor(Color.LTGRAY);
 		        return true;
 			}
 		});
@@ -234,6 +242,8 @@ public class ToDoMainActivity extends Activity {
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
 			currentActionMode = null; // Clear current action mode
+			lvItems.getChildAt(currentListItemIndex).setBackgroundColor(Color.TRANSPARENT);
+			currentListItemIndex = -1;
 		}
 	};	
 	

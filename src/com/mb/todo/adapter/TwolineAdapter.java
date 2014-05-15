@@ -3,6 +3,8 @@ package com.mb.todo.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,14 +16,7 @@ import com.mb.todo.model.Todo;
 
 public class TwolineAdapter extends ArrayAdapter<Todo> {
 
-//	private List<String> todos_;
 	private List<Todo> todoList_;
-	
-//	public TwolineAdapter(Context context, List<String> todos) {
-//        //super(context, android.R.layout.simple_list_item_2, android.R.id.text1, todos);		
-//		super(context, R.layout.todo_item, R.id.ctvTodoItemTitle, todos);
-//        this.todos_ = todos;
-//    }
 	
 	public TwolineAdapter(Context context, List<Todo> todos) {
 		super(context, R.layout.todo_item, R.id.ctvTodoItemTitle, todos);
@@ -34,8 +29,19 @@ public class TwolineAdapter extends ArrayAdapter<Todo> {
         CheckedTextView ctvTodoItemTitle = (CheckedTextView) view.findViewById(R.id.ctvTodoItemTitle);
         TextView tvTodoItemDetail = (TextView) view.findViewById(R.id.tvTodoItemDetail);
 
+        boolean isFinished = todoList_.get(position).isFinished();
+        
         ctvTodoItemTitle.setText(todoList_.get(position).getTitle());
-        ctvTodoItemTitle.setChecked(todoList_.get(position).isFinished());
+        if (isFinished) {
+        	ctvTodoItemTitle.setTextColor(Color.GRAY);
+        	ctvTodoItemTitle.setPaintFlags(ctvTodoItemTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+        	ctvTodoItemTitle.setTextColor(Color.BLACK);
+        	
+        	ctvTodoItemTitle.setPaintFlags(ctvTodoItemTitle.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        
+        ctvTodoItemTitle.setChecked(isFinished);
         tvTodoItemDetail.setText(String.valueOf(position));
         return view;
     }
