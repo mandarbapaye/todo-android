@@ -37,11 +37,11 @@ public class TwolineAdapter extends ArrayAdapter<Todo> {
         	ctvTodoItemTitle.setPaintFlags(ctvTodoItemTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
         	ctvTodoItemTitle.setTextColor(Color.BLACK);
-        	
         	ctvTodoItemTitle.setPaintFlags(ctvTodoItemTitle.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
         }
         
         ctvTodoItemTitle.setChecked(isFinished);
+        tvTodoItemDetail.setTextColor(Color.GRAY);
         tvTodoItemDetail.setText(String.valueOf(position));
         return view;
     }

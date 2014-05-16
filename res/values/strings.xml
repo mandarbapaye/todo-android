@@ -12,5 +12,8 @@
     <string name="invalid_blank_item_label">Blank item cant be added.</string>
     <string name="delete_lable">Delete</string>
     <string name="edit_label">Edit</string>
+    <string name="edit_finished_tasks_label">Completed Tasks can not be edited.</string>
+    <string name="dueDate_lable">Set Due Date</string>
+    <string name="dateFormat_label">(yyyy-mm-dd)</string>
 
 </resources>

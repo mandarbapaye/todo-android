@@ -1,11 +1,12 @@
 package com.mb.todo;
 
 import static com.mb.todo.Constants.ITEM_POS_INTENT_PARAM;
-import static com.mb.todo.Constants.ITEM_TEXT_INTENT_PARAM;
+import static com.mb.todo.Constants.TODO_ITEM;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -144,7 +145,14 @@ public class ToDoMainActivity extends Activity {
 						todo.setTitle(token);
 					} else if (count == 1) {
 						todo.setFinished(Boolean.parseBoolean(token));
+					} else if (count == 2) {
+						todo.setDueDateSet(Boolean.parseBoolean(token));
+					} else if (count == 3) {
+						Calendar dueDate = Calendar.getInstance();
+						dueDate.setTimeInMillis(Long.parseLong(token));
+						todo.setDueDate(dueDate);
 					}
+					
 					count++;
 				}
 				
@@ -176,11 +184,8 @@ public class ToDoMainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-			String newValue = data.getExtras().getString(ITEM_TEXT_INTENT_PARAM);
 			int itemPos = data.getExtras().getInt(ITEM_POS_INTENT_PARAM);
-			
-			Todo newTodo = new Todo();
-			newTodo.setTitle(newValue);
+			Todo newTodo = (Todo) data.getExtras().get(TODO_ITEM);
 			
 			todoItemsAdapter.insert(newTodo, itemPos);
 			todoList.remove(itemPos + 1);
@@ -192,14 +197,12 @@ public class ToDoMainActivity extends Activity {
 	
 	// Define the callback when ActionMode is activated
 	private ActionMode.Callback modeCallBack = new ActionMode.Callback() {
-		// Called when the action mode is created; startActionMode() was called
-		String itemTitle;
+		Todo selectedTodo;
 		
+		// Called when the action mode is created; startActionMode() was called
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			itemTitle = todoList.get(currentListItemIndex).getTitle();
-			Toast.makeText(ToDoMainActivity.this, "Selected " + itemTitle, Toast.LENGTH_SHORT).show();
-
+			selectedTodo = todoList.get(currentListItemIndex);
 			mode.setTitle("Actions");
 			mode.getMenuInflater().inflate(R.menu.actions_menu, menu);
 			return true;
@@ -208,7 +211,15 @@ public class ToDoMainActivity extends Activity {
 		// Called each time the action mode is shown.
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			return false; // Return false if nothing is done
+			MenuItem editMenuItem = menu.findItem(R.id.menu_edit);
+			editMenuItem.setVisible(!selectedTodo.isFinished());
+			if (!editMenuItem.isVisible()) {
+				Toast.makeText(ToDoMainActivity.this, R.string.edit_finished_tasks_label, Toast.LENGTH_LONG).show();
+			}
+			return true; 
+			
+// 			Return false if nothing is done
+//			return false;
 		}
 
 		// Called when the user selects a contextual menu item
@@ -219,7 +230,7 @@ public class ToDoMainActivity extends Activity {
 				case R.id.menu_edit:
 
 					Intent editItemIntent = new Intent(ToDoMainActivity.this, EditItemActivity.class);
-					editItemIntent.putExtra(ITEM_TEXT_INTENT_PARAM, todoList.get(currentListItemIndex).getTitle());					
+					editItemIntent.putExtra(TODO_ITEM, selectedTodo);
 					editItemIntent.putExtra(ITEM_POS_INTENT_PARAM, currentListItemIndex);
 					startActivityForResult(editItemIntent, REQUEST_CODE);
 

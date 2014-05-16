@@ -1,10 +1,33 @@
 package com.mb.todo.model;
 
-public class Todo {
+import java.io.Serializable;
+import java.util.Calendar;
+
+public class Todo implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String title;
 	private boolean finished = false;
+	private boolean dueDateSet = false;
+	private Calendar dueDate = Calendar.getInstance();
 	
+	public boolean isDueDateSet() {
+		return dueDateSet;
+	}
+
+	public void setDueDateSet(boolean dueDateSet) {
+		this.dueDateSet = dueDateSet;
+	}
+
+	public Calendar getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Calendar dueDate) {
+		this.dueDate = dueDate;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -23,7 +46,7 @@ public class Todo {
 	
 	@Override
 	public String toString() {
-		return title + "," + finished;
+		return title + "," + finished + "," + dueDateSet + "," + dueDate.getTimeInMillis();
 	}
 
 }

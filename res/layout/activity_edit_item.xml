@@ -14,9 +14,52 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvEditItemLabel"
         android:layout_below="@+id/tvEditItemLabel"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="17dp"
         android:ems="10"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnSaveEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etEditItem"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="28dp"
+        android:onClick="onItemEdited"
+        android:text="@string/save_label" />
+
+    <EditText
+        android:id="@+id/etDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cbDueDate"
+        android:layout_below="@+id/cbDueDate"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/tvDueDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etDueDate"
+        android:layout_below="@+id/etDueDate"
+        android:layout_marginTop="14dp"
+        android:text="@string/dateFormat_label"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <CheckBox
+        android:id="@+id/cbDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/etEditItem"
+        android:layout_below="@+id/etEditItem"
+        android:layout_marginTop="26dp"
+        android:checked="true"
+        android:text="@string/dueDate_lable" />
 
     <TextView
         android:id="@+id/tvEditItemLabel"
@@ -24,19 +67,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="28dp"
         android:text="@string/edit_item_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-        android:id="@+id/btnSaveEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etEditItem"
-        android:layout_below="@+id/etEditItem"
-        android:layout_marginTop="26dp"
-        android:onClick="onItemEdited"
-        android:text="@string/save_label" />
 
 </RelativeLayout>
