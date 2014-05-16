@@ -69,6 +69,7 @@ public final class R {
         public static final int edit_label=0x7f05000a;
         public static final int hello_world=0x7f050002;
         public static final int invalid_blank_item_label=0x7f050008;
+        public static final int itemDueDate_label=0x7f05000e;
         public static final int save_label=0x7f050007;
         public static final int title_activity_edit_item=0x7f050005;
     }

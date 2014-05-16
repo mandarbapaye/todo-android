@@ -1,6 +1,9 @@
 package com.mb.todo.adapter;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -28,10 +31,11 @@ public class TwolineAdapter extends ArrayAdapter<Todo> {
         View view = super.getView(position, convertView, parent);
         CheckedTextView ctvTodoItemTitle = (CheckedTextView) view.findViewById(R.id.ctvTodoItemTitle);
         TextView tvTodoItemDetail = (TextView) view.findViewById(R.id.tvTodoItemDetail);
-
-        boolean isFinished = todoList_.get(position).isFinished();
         
-        ctvTodoItemTitle.setText(todoList_.get(position).getTitle());
+        Todo todo = todoList_.get(position);
+        boolean isFinished = todo.isFinished();
+        
+        ctvTodoItemTitle.setText(todo.getTitle());
         if (isFinished) {
         	ctvTodoItemTitle.setTextColor(Color.GRAY);
         	ctvTodoItemTitle.setPaintFlags(ctvTodoItemTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -41,8 +45,26 @@ public class TwolineAdapter extends ArrayAdapter<Todo> {
         }
         
         ctvTodoItemTitle.setChecked(isFinished);
-        tvTodoItemDetail.setTextColor(Color.GRAY);
-        tvTodoItemDetail.setText(String.valueOf(position));
+
+        int detailTextColor = Color.GRAY;
+        String detailText = "No Due Date Set.";
+        if (todo.isDueDateSet()) {
+        	Calendar currentTime = Calendar.getInstance();
+        	if (currentTime.before(todo.getDueDate())) {
+            	long diffInMS = todo.getDueDate().getTimeInMillis() - currentTime.getTimeInMillis();
+            	long daysToDue = diffInMS / (24 * 60 * 60 * 1000);
+            	detailText = "Due in " + ++daysToDue + " day(s).";
+            	detailTextColor = daysToDue < 2 ? Color.RED : (daysToDue < 5) ? Color.parseColor("#EEC900") : Color.parseColor("#9CCB19");
+        	} else {
+            	long diffInMS = currentTime.getTimeInMillis() - todo.getDueDate().getTimeInMillis();
+            	long overdueDays = diffInMS / (24 * 60 * 60 * 1000);
+            	detailText = "Overdue by " + ++overdueDays + " days.";
+            	detailTextColor = Color.RED;
+        	}
+        }
+        
+        tvTodoItemDetail.setText(detailText);
+        tvTodoItemDetail.setTextColor(detailTextColor);
         return view;
     }
 }
