@@ -115,7 +115,9 @@ public class EditItemActivity extends Activity {
 		Calendar dueDateCal = Calendar.getInstance();
 		try {
 			Date dueDate = dateFormat.parse(dueDateStr);
-			dueDateCal.setTime(dueDate);
+			long msIn24Hrs = 24 * 60 * 60 * 1000;
+			msIn24Hrs--;
+			dueDateCal.setTimeInMillis(dueDate.getTime() + msIn24Hrs);
 		} catch (Exception e) {
 		}
 		

@@ -15,6 +15,6 @@
     <string name="edit_finished_tasks_label">Completed Tasks can not be edited.</string>
     <string name="dueDate_lable">Set Due Date</string>
     <string name="dateFormat_label">(yyyy-mm-dd)</string>
-    <string name="itemDueDate_label">Due Date: </string>
+    <string name="noDueDate_label">No Due Date Set</string>
     
 </resources>
