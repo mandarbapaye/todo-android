@@ -13,9 +13,10 @@
     <string name="delete_lable">Delete</string>
     <string name="edit_label">Edit</string>
     <string name="edit_finished_tasks_label">Completed Tasks can not be edited.</string>
-    <string name="dueDate_lable">Set Due Date</string>
-    <string name="dateFormat_label">(yyyy-mm-dd)</string>
+    <string name="setDueDate_label">Set Due Date</string>
     <string name="noDueDate_label">No Due Date Set</string>
-    <string name="noDateSet_label">No Date Set</string>
+    <string name="noDateSet_label">Not Set</string>
+    <string name="title_label">Title:</string>
+    <string name="date_label">Date:</string>
     
 </resources>
