@@ -28,7 +28,8 @@ public final class R {
         public static final int btn_check_off_pressed_holo_dark=0x7f020002;
         public static final int btn_check_on=0x7f020003;
         public static final int btn_check_on_focused_holo_dark=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
+        public static final int ic_checkmark_holo_light=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
     }
     public static final class id {
         public static final int action_settings=0x7f08000d;

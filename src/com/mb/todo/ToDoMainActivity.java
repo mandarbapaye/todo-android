@@ -228,7 +228,7 @@ public class ToDoMainActivity extends Activity {
 			MenuItem editMenuItem = menu.findItem(R.id.menu_edit);
 			editMenuItem.setVisible(!selectedTodo.isFinished());
 			if (!editMenuItem.isVisible()) {
-				Toast.makeText(ToDoMainActivity.this, R.string.edit_finished_tasks_label, Toast.LENGTH_LONG).show();
+				Toast.makeText(ToDoMainActivity.this, R.string.edit_finished_tasks_label, Toast.LENGTH_SHORT).show();
 			}
 			return true; 
 			
