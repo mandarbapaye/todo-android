@@ -37,6 +37,8 @@ public class TwolineAdapter extends ArrayAdapter<Todo> {
         boolean isFinished = todo.isFinished();
         
         ctvTodoItemTitle.setText(todo.getTitle());
+        ctvTodoItemTitle.setTextAppearance(super.getContext(), android.R.style.TextAppearance_Medium);
+
         if (isFinished) {
         	ctvTodoItemTitle.setTextColor(Color.GRAY);
         	ctvTodoItemTitle.setPaintFlags(ctvTodoItemTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

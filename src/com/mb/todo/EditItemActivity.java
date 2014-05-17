@@ -5,11 +5,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import com.mb.todo.fragment.DatePickerFragment;
 import com.mb.todo.model.Todo;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -19,16 +22,19 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import static com.mb.todo.Constants.ITEM_POS_INTENT_PARAM;
 import static com.mb.todo.Constants.TODO_ITEM;
 
-public class EditItemActivity extends Activity {
+public class EditItemActivity extends FragmentActivity implements DatePickerFragment.OnDateSetListener {
 	
 	private EditText etEditItem;
 	private Button btnSaveEdit;
 	private CheckBox cbDueDate;
-	private EditText etDueDate;
+	private ImageButton btnCalendar;
+	private TextView tvDueDateLabel;
 	
 	private int editItemPos;
 	
@@ -48,8 +54,9 @@ public class EditItemActivity extends Activity {
 				
 		btnSaveEdit = (Button) findViewById(R.id.btnSaveEdit);
 		cbDueDate = (CheckBox) findViewById(R.id.cbDueDate);
-		etDueDate = (EditText) findViewById(R.id.etDueDate);
 		etEditItem = (EditText) findViewById(R.id.etEditItem);
+		tvDueDateLabel = (TextView) findViewById(R.id.tvDueDateLabel);
+		btnCalendar = (ImageButton) findViewById(R.id.btnCalendar);
 
 		etEditItem.setText(todoItem.getTitle());
 		etEditItem.requestFocus();
@@ -58,7 +65,7 @@ public class EditItemActivity extends Activity {
 		setupTextChangeListener();
 		setupCheckboxHandler();
 		cbDueDate.setChecked(todoItem.isDueDateSet());
-		etDueDate.setText(dateFormat.format(todoItem.getDueDate().getTime()));
+		tvDueDateLabel.setText(dateFormat.format(todoItem.getDueDate().getTime()));
 	}
 
 	
@@ -66,7 +73,7 @@ public class EditItemActivity extends Activity {
 		cbDueDate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etDueDate.setEnabled(isChecked);
+				btnCalendar.setEnabled(isChecked);
 			}
 		});
 	}
@@ -106,12 +113,32 @@ public class EditItemActivity extends Activity {
 	public void onItemEdited(View v) {
 		String newValue = etEditItem.getText().toString();
 		boolean dueDateSet = cbDueDate.isChecked();
-		String dueDateStr = etDueDate.getText().toString();
 		
 		Todo newTodo = new Todo();
 		newTodo.setTitle(newValue);
 		newTodo.setDueDateSet(dueDateSet);
 		
+		Calendar dueDateCal = getDueDateCalendarInstance();
+		newTodo.setDueDate(dueDateCal);
+		
+		Intent data = new Intent();
+		data.putExtra(ITEM_POS_INTENT_PARAM, editItemPos);
+		data.putExtra(TODO_ITEM, newTodo);
+		
+		setResult(RESULT_OK, data);
+		finish();
+	}
+	
+	public void showDatePickerDialog(View v) {
+		Calendar dueDateCal = getDueDateCalendarInstance();
+		
+	    DialogFragment newFragment = DatePickerFragment.newInstance(dueDateCal.getTimeInMillis());
+	    newFragment.show(this.getFragmentManager(), "datePicker");
+	}
+	
+	private Calendar getDueDateCalendarInstance() {
+		String dueDateStr = tvDueDateLabel.getText().toString();
+
 		Calendar dueDateCal = Calendar.getInstance();
 		try {
 			Date dueDate = dateFormat.parse(dueDateStr);
@@ -121,14 +148,12 @@ public class EditItemActivity extends Activity {
 		} catch (Exception e) {
 		}
 		
-		newTodo.setDueDate(dueDateCal);
-		
-		Intent data = new Intent();
-		data.putExtra(ITEM_POS_INTENT_PARAM, editItemPos);
-		data.putExtra(TODO_ITEM, newTodo);
-		
-		setResult(RESULT_OK, data);
-		finish();
+		return dueDateCal;
+	}
+
+	@Override
+	public void onDateSet(Calendar chosenDate) {
+		tvDueDateLabel.setText(dateFormat.format(chosenDate.getTime()));
 	}
 
 }

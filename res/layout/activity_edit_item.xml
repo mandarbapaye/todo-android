@@ -21,36 +21,6 @@
         <requestFocus />
     </EditText>
 
-    <Button
-        android:id="@+id/btnSaveEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etEditItem"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="28dp"
-        android:onClick="onItemEdited"
-        android:text="@string/save_label" />
-
-    <EditText
-        android:id="@+id/etDueDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cbDueDate"
-        android:layout_below="@+id/cbDueDate"
-        android:layout_marginTop="14dp"
-        android:ems="10"
-        android:inputType="date" />
-
-    <TextView
-        android:id="@+id/tvDueDateLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/etDueDate"
-        android:layout_below="@+id/etDueDate"
-        android:layout_marginTop="14dp"
-        android:text="@string/dateFormat_label"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <CheckBox
         android:id="@+id/cbDueDate"
         android:layout_width="wrap_content"
@@ -71,5 +41,34 @@
         android:layout_marginTop="28dp"
         android:text="@string/edit_item_label"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/btnSaveEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cbDueDate"
+        android:layout_below="@+id/btnCalendar"
+        android:layout_marginTop="35dp"
+        android:onClick="onItemEdited"
+        android:text="@string/save_label" />
+
+    <ImageButton
+        android:id="@+id/btnCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/tvEditItemLabel"
+        android:onClick="showDatePickerDialog"
+        android:src="@drawable/ic_menu_today" />
+
+    <TextView
+        android:id="@+id/tvDueDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/cbDueDate"
+        android:layout_centerVertical="true"
+        android:text="@string/noDateSet_label"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

@@ -30,14 +30,16 @@ public final class R {
         public static final int btn_check_on_focused_holo_dark=0x7f020004;
         public static final int ic_checkmark_holo_light=0x7f020005;
         public static final int ic_launcher=0x7f020006;
+        public static final int ic_menu_day=0x7f020007;
+        public static final int ic_menu_today=0x7f020008;
     }
     public static final class id {
         public static final int action_settings=0x7f08000d;
         public static final int btnAdd=0x7f080007;
-        public static final int btnSaveEdit=0x7f080002;
-        public static final int cbDueDate=0x7f080004;
+        public static final int btnCalendar=0x7f080004;
+        public static final int btnSaveEdit=0x7f080003;
+        public static final int cbDueDate=0x7f080002;
         public static final int ctvTodoItemTitle=0x7f080009;
-        public static final int etDueDate=0x7f080003;
         public static final int etEditItem=0x7f080000;
         public static final int etNewItem=0x7f080008;
         public static final int lvItems=0x7f080006;
@@ -70,6 +72,7 @@ public final class R {
         public static final int edit_label=0x7f05000a;
         public static final int hello_world=0x7f050002;
         public static final int invalid_blank_item_label=0x7f050008;
+        public static final int noDateSet_label=0x7f05000f;
         public static final int noDueDate_label=0x7f05000e;
         public static final int save_label=0x7f050007;
         public static final int title_activity_edit_item=0x7f050005;

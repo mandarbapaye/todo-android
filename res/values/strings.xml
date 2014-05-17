@@ -16,5 +16,6 @@
     <string name="dueDate_lable">Set Due Date</string>
     <string name="dateFormat_label">(yyyy-mm-dd)</string>
     <string name="noDueDate_label">No Due Date Set</string>
+    <string name="noDateSet_label">No Date Set</string>
     
 </resources>
