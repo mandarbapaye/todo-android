@@ -1,7 +1,9 @@
 package com.mb.todo.adapter;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,6 +20,7 @@ import com.mb.todo.model.Todo;
 public class TwolineAdapter extends ArrayAdapter<Todo> {
 
 	private List<Todo> todoList_;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 	
 	public TwolineAdapter(Context context, List<Todo> todos) {
 		super(context, R.layout.todo_item, R.id.ctvTodoItemTitle, todos);
@@ -48,7 +51,7 @@ public class TwolineAdapter extends ArrayAdapter<Todo> {
         String detailText = super.getContext().getResources().getString(R.string.noDueDate_label);
         
         if (todo.isFinished()) {
-        	detailText = "Finished";
+        	detailText = "Finished on: " + dateFormat.format(todo.getFinishDate().getTime());
         } else {
             if (todo.isDueDateSet()) {
             	Calendar currentTime = Calendar.getInstance();

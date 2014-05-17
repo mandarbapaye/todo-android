@@ -11,7 +11,16 @@ public class Todo implements Serializable {
 	private boolean finished = false;
 	private boolean dueDateSet = false;
 	private Calendar dueDate = Calendar.getInstance();
+	private Calendar finishDate;
 	
+	public Calendar getFinishDate() {
+		return finishDate;
+	}
+
+	public void setFinishDate(Calendar finishDate) {
+		this.finishDate = finishDate;
+	}
+
 	public boolean isDueDateSet() {
 		return dueDateSet;
 	}
@@ -46,7 +55,14 @@ public class Todo implements Serializable {
 	
 	@Override
 	public String toString() {
-		return title + "," + finished + "," + dueDateSet + "," + dueDate.getTimeInMillis();
+		String outStr =  title + "," + finished + "," + dueDateSet + "," + dueDate.getTimeInMillis() + ",";
+		if (finishDate == null) {
+			outStr += 0;
+		} else {
+			outStr += finishDate.getTimeInMillis();
+		}
+		
+		return outStr;
 	}
 
 }

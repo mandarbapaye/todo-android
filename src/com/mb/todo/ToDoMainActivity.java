@@ -117,6 +117,11 @@ public class ToDoMainActivity extends Activity {
 				
 				Todo todo = todoList.get(pos);
 				todo.setFinished(!todo.isFinished());
+				if (!todo.isFinished()) {
+					todo.setFinishDate(null);
+				} else {
+					todo.setFinishDate(Calendar.getInstance());
+				}
 				todoItemsAdapter.notifyDataSetChanged();
 				saveItemsToFile();
 				
@@ -151,6 +156,15 @@ public class ToDoMainActivity extends Activity {
 						Calendar dueDate = Calendar.getInstance();
 						dueDate.setTimeInMillis(Long.parseLong(token));
 						todo.setDueDate(dueDate);
+					} else if (count == 4) {
+						long finishMs = Long.parseLong(token);
+						if (finishMs == 0) {
+							todo.setFinishDate(null);
+						} else {
+							Calendar finishDate = Calendar.getInstance();
+							finishDate.setTimeInMillis(finishMs);
+							todo.setFinishDate(finishDate);
+						}
 					}
 					
 					count++;
