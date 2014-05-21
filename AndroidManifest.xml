@@ -26,6 +26,8 @@
             android:name="com.mb.todo.EditItemActivity"
             android:label="@string/title_activity_edit_item" >
         </activity>
+        
+        <receiver android:name=".MyReceiver"/>
     </application>
 
 </manifest>
