@@ -18,5 +18,7 @@
     <string name="noDateSet_label">Not Set</string>
     <string name="title_label">Title:</string>
     <string name="date_label">Date:</string>
+    <string name="remind_me_label">Remind Me</string>
+    <string name="empty_label">" "</string>
     
 </resources>

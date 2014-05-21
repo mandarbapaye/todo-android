@@ -12,6 +12,7 @@ public class Todo implements Serializable {
 	private boolean dueDateSet = false;
 	private Calendar dueDate = Calendar.getInstance();
 	private Calendar finishDate;
+	private Calendar reminderTS;
 	
 	public Calendar getFinishDate() {
 		return finishDate;
@@ -31,6 +32,14 @@ public class Todo implements Serializable {
 
 	public Calendar getDueDate() {
 		return dueDate;
+	}
+
+	public Calendar getReminderTS() {
+		return reminderTS;
+	}
+
+	public void setReminderTS(Calendar reminderTS) {
+		this.reminderTS = reminderTS;
 	}
 
 	public void setDueDate(Calendar dueDate) {
@@ -60,6 +69,14 @@ public class Todo implements Serializable {
 			outStr += 0;
 		} else {
 			outStr += finishDate.getTimeInMillis();
+		}
+		
+		outStr += ",";
+		
+		if (reminderTS == null) {
+			outStr += 0;
+		} else {
+			outStr += reminderTS.getTimeInMillis();
 		}
 		
 		return outStr;

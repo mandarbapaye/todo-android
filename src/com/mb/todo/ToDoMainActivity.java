@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.mb.todo.adapter.TwolineAdapter;
 import com.mb.todo.model.Todo;
+import com.mb.todo.receiver.TodoAlarmReceiver;
 
 public class ToDoMainActivity extends Activity {
 	
@@ -167,6 +168,15 @@ public class ToDoMainActivity extends Activity {
 							finishDate.setTimeInMillis(finishMs);
 							todo.setFinishDate(finishDate);
 						}
+					} else if (count == 5) {
+						long reminderMS = Long.parseLong(token);
+						if (reminderMS == 0) {
+							todo.setReminderTS(null);
+						} else {
+							Calendar reminderTS = Calendar.getInstance();
+							reminderTS.setTimeInMillis(reminderMS);
+							todo.setReminderTS(reminderTS);
+						}
 					}
 					
 					count++;
@@ -219,7 +229,7 @@ public class ToDoMainActivity extends Activity {
 			calendar.set(Calendar.SECOND, 0);
 			calendar.set(Calendar.AM_PM, Calendar.PM);
 
-			Intent myIntent = new Intent(ToDoMainActivity.this, MyReceiver.class);
+			Intent myIntent = new Intent(ToDoMainActivity.this, TodoAlarmReceiver.class);
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(ToDoMainActivity.this, 0,	myIntent, 0);
 
 			AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

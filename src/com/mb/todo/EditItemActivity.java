@@ -1,17 +1,16 @@
 package com.mb.todo;
 
+import static com.mb.todo.Constants.ITEM_POS_INTENT_PARAM;
+import static com.mb.todo.Constants.TODO_ITEM;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.mb.todo.fragment.DatePickerFragment;
-import com.mb.todo.model.Todo;
-
-import android.os.Bundle;
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,20 +24,30 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import static com.mb.todo.Constants.ITEM_POS_INTENT_PARAM;
-import static com.mb.todo.Constants.TODO_ITEM;
+import com.mb.todo.fragment.DatePickerFragment;
+import com.mb.todo.model.Todo;
 
 public class EditItemActivity extends FragmentActivity implements DatePickerFragment.OnDateSetListener {
 	
 	private EditText etEditItem;
 	private Button btnSaveEdit;
+	
 	private CheckBox cbDueDate;
 	private ImageButton btnCalendar;
 	private TextView tvDueDateLabel;
 	
+	private CheckBox cbReminder;
+	private ImageButton btnReminderDate;
+	private ImageButton btnReminderTime;
+	private TextView tvReminderDate;
+	private TextView tvReminderTime;
+	
 	private int editItemPos;
 	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+	
+	private boolean chooseDueDate = false;
+	private boolean chooseReminderDate = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,12 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 		etEditItem = (EditText) findViewById(R.id.etEditItem);
 		tvDueDateLabel = (TextView) findViewById(R.id.tvDueDateLabel);
 		btnCalendar = (ImageButton) findViewById(R.id.btnCalendar);
+		
+		cbReminder = (CheckBox) findViewById(R.id.cbReminder);
+		btnReminderDate = (ImageButton) findViewById(R.id.btnReminderDate);
+		btnReminderTime = (ImageButton) findViewById(R.id.btnReminderTime);
+		tvReminderDate = (TextView) findViewById(R.id.tvReminderDate);
+		tvReminderTime = (TextView) findViewById(R.id.tvReminderTime);
 
 		etEditItem.setText(todoItem.getTitle());
 		etEditItem.requestFocus();
@@ -65,6 +80,7 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 		setupTextChangeListener();
 		setupCheckboxHandler();
 		cbDueDate.setChecked(todoItem.isDueDateSet());
+		cbReminder.setChecked(todoItem.getReminderTS() != null ? true : false);
 		tvDueDateLabel.setText(dateFormat.format(todoItem.getDueDate().getTime()));
 	}
 
@@ -74,6 +90,16 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				btnCalendar.setEnabled(isChecked);
+			}
+		});
+		
+		cbReminder.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				btnReminderDate.setEnabled(isChecked);
+				btnReminderTime.setEnabled(isChecked);
+				tvReminderDate.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+				tvReminderTime.setVisibility(isChecked ? View.VISIBLE : View.GONE);
 			}
 		});
 	}
@@ -129,9 +155,10 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 		finish();
 	}
 	
-	public void showDatePickerDialog(View v) {
+	public void showDueDatePickerDialog(View v) {
 		Calendar dueDateCal = getDueDateCalendarInstance();
 		
+		chooseDueDate = true;
 	    DialogFragment newFragment = DatePickerFragment.newInstance(dueDateCal.getTimeInMillis());
 	    newFragment.show(this.getFragmentManager(), "datePicker");
 	}
@@ -150,10 +177,52 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 		
 		return dueDateCal;
 	}
+	
+	
+	public void showReminderDatePickerDialog(View v) {
+		Calendar reminderDateCal = getReminderDateCalendarInstance();
+		
+		chooseReminderDate = true;
+	    DialogFragment newFragment = DatePickerFragment.newInstance(reminderDateCal.getTimeInMillis());
+	    newFragment.show(this.getFragmentManager(), "datePicker");
+	}
+	
+	private Calendar getReminderDateCalendarInstance() {
+		String reminderDateStr = tvReminderDate.getText().toString();
+		Date reminderDate = new Date();
+		
+		try {
+			if (!reminderDateStr.trim().isEmpty()) {
+				reminderDate = dateFormat.parse(reminderDateStr);
+			}
+		} catch (Exception e) {
+			reminderDate = new Date();
+		}
+		
+		Calendar reminderDateCal = Calendar.getInstance();
+		reminderDateCal.setTimeInMillis(reminderDate.getTime());
+		return reminderDateCal;
+	}
+
+
+	
+	public void showReminderTimePickerDialog(View v) {
+//		Calendar dueDateCal = getDueDateCalendarInstance();
+//		
+//	    DialogFragment newFragment = DatePickerFragment.newInstance(dueDateCal.getTimeInMillis());
+//	    newFragment.show(this.getFragmentManager(), "datePicker");
+	}
+
 
 	@Override
 	public void onDateSet(Calendar chosenDate) {
-		tvDueDateLabel.setText(dateFormat.format(chosenDate.getTime()));
+		if (chooseReminderDate) {
+			chooseReminderDate = false;
+			tvReminderDate.setText(dateFormat.format(chosenDate.getTime()));	
+		} else if (chooseDueDate) {
+			chooseDueDate = false;
+			tvDueDateLabel.setText(dateFormat.format(chosenDate.getTime()));	
+		}
 	}
 
 }
