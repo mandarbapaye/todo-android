@@ -1,7 +1,6 @@
 package com.mb.todo.adapter;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,6 +15,8 @@ import android.widget.TextView;
 
 import com.mb.todo.R;
 import com.mb.todo.model.Todo;
+import com.mb.todo.pojo.DueStatus;
+import com.mb.todo.util.Utils;
 
 public class TwolineAdapter extends ArrayAdapter<Todo> {
 
@@ -56,25 +57,29 @@ public class TwolineAdapter extends ArrayAdapter<Todo> {
         	detailText = "Finished on: " + dateFormat.format(todo.getFinishDate().getTime());
         } else {
             if (todo.isDueDateSet()) {
-            	Calendar currentTime = Calendar.getInstance();
+//            	Calendar currentTime = Calendar.getInstance();
+//            	
+//            	if (currentTime.before(todo.getDueDate())) {
+//                	long diffInMS = todo.getDueDate().getTimeInMillis() - currentTime.getTimeInMillis();
+//                	long daysToDue = diffInMS / (24 * 60 * 60 * 1000);
+//                	
+//                	if (daysToDue < 1) {
+//                    	detailText = "Due Today";
+//                    	detailTextColor = Color.RED;
+//                	} else {
+//                    	detailText = "Due in " + daysToDue + " day(s).";
+//                    	detailTextColor = daysToDue < 2 ? Color.RED : (daysToDue < 5) ? Color.parseColor("#EEC900") : Color.parseColor("#9CCB19");
+//                	}                	
+//            	} else {
+//                	long diffInMS = currentTime.getTimeInMillis() - todo.getDueDate().getTimeInMillis();
+//                	long overdueDays = diffInMS / (24 * 60 * 60 * 1000);
+//					detailText = "Overdue by " + ++overdueDays + " day(s).";
+//                	detailTextColor = Color.RED;
+//            	}
             	
-            	if (currentTime.before(todo.getDueDate())) {
-                	long diffInMS = todo.getDueDate().getTimeInMillis() - currentTime.getTimeInMillis();
-                	long daysToDue = diffInMS / (24 * 60 * 60 * 1000);
-                	
-                	if (daysToDue < 1) {
-                    	detailText = "Due Today";
-                    	detailTextColor = Color.RED;
-                	} else {
-                    	detailText = "Due in " + daysToDue + " day(s).";
-                    	detailTextColor = daysToDue < 2 ? Color.RED : (daysToDue < 5) ? Color.parseColor("#EEC900") : Color.parseColor("#9CCB19");
-                	}                	
-            	} else {
-                	long diffInMS = currentTime.getTimeInMillis() - todo.getDueDate().getTimeInMillis();
-                	long overdueDays = diffInMS / (24 * 60 * 60 * 1000);
-					detailText = "Overdue by " + ++overdueDays + " day(s).";
-                	detailTextColor = Color.RED;
-            	}
+            	DueStatus dueStatus = Utils.getDueStatus(todo.getDueDate());
+            	detailText = dueStatus.getTitle();
+            	detailTextColor = dueStatus.getColor();
             }
         }
         

@@ -13,12 +13,12 @@ public class TodoAlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		createNotification(context);
+		createNotification(context, intent);
 	}
 	
-	private void createNotification(Context context) {
+	private void createNotification(Context context, Intent intent) {
 		NotificationCompat.Builder mBuilder = 
-				new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_checkmark_holo_light).setContentTitle("This is Title").setContentText("This is body");
+				new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_checkmark_holo_light).setContentTitle(intent.getDataString()).setContentText("No due date details yet.");
 
 		NotificationManager mNotificationManager = 
 	            (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

@@ -80,6 +80,7 @@
         android:layout_alignLeft="@+id/btnCalendar"
         android:layout_below="@+id/tvDueDateLabel"
         android:layout_marginTop="29dp"
+        android:checked="true"
         android:text="@string/remind_me_label" />
 
     <ImageButton
