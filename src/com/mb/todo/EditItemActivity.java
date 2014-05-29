@@ -50,6 +50,8 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 	
 	private boolean chooseDueDate = false;
 	private boolean chooseReminderDate = false;
+	
+	private Todo todoItemToEdit;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 		setContentView(R.layout.activity_edit_item);
 		
 		Todo todoItem = (Todo) getIntent().getSerializableExtra(TODO_ITEM);
+		todoItemToEdit = todoItem;
+		
 		editItemPos = getIntent().getIntExtra(ITEM_POS_INTENT_PARAM, -1);
 		
 		if (editItemPos == -1) {
@@ -151,6 +155,7 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 		boolean dueDateSet = cbDueDate.isChecked();
 		
 		Todo newTodo = new Todo();
+		newTodo.setId(todoItemToEdit.getId());
 		newTodo.setTitle(newValue);
 		newTodo.setDueDateSet(dueDateSet);
 		

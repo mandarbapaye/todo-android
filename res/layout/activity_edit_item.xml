@@ -19,7 +19,7 @@
         android:textColor="@android:color/darker_gray" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvDueDateLabel"

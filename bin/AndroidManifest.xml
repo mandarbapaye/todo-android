@@ -27,7 +27,7 @@
             android:label="@string/title_activity_edit_item" >
         </activity>
         
-        <receiver android:name="com.mb.todo.receiver.TodoAlarmReceiver"/>
+        <receiver android:name="com.mb.todo.notifications.TodoAlarmReceiver"/>
     </application>
 
 </manifest>

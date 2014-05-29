@@ -7,6 +7,7 @@ public class Todo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	private int id;
 	private String title;
 	private boolean finished = false;
 	private boolean dueDateSet = false;
@@ -14,6 +15,14 @@ public class Todo implements Serializable {
 	private Calendar finishDate;
 	private Calendar reminderTS;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Calendar getFinishDate() {
 		return finishDate;
 	}
@@ -64,7 +73,7 @@ public class Todo implements Serializable {
 	
 	@Override
 	public String toString() {
-		String outStr =  title + "," + finished + "," + dueDateSet + "," + dueDate.getTimeInMillis() + ",";
+		String outStr =  id + "," + title + "," + finished + "," + dueDateSet + "," + dueDate.getTimeInMillis() + ",";
 		if (finishDate == null) {
 			outStr += 0;
 		} else {

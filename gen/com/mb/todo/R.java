@@ -49,7 +49,7 @@ public final class R {
         public static final int lvItems=0x7f08000c;
         public static final int menu_delete=0x7f080012;
         public static final int menu_edit=0x7f080011;
-        public static final int textView1=0x7f080003;
+        public static final int tvDateLabel=0x7f080003;
         public static final int tvDateTimeLabel=0x7f08000a;
         public static final int tvDueDateLabel=0x7f080000;
         public static final int tvEditItemLabel=0x7f080004;

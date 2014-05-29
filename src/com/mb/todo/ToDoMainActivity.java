@@ -14,7 +14,9 @@ import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -32,7 +34,8 @@ import android.widget.Toast;
 
 import com.mb.todo.adapter.TwolineAdapter;
 import com.mb.todo.model.Todo;
-import com.mb.todo.receiver.TodoAlarmReceiver;
+import com.mb.todo.notifications.NotificationsHelper;
+import com.mb.todo.notifications.TodoAlarmReceiver;
 
 public class ToDoMainActivity extends Activity {
 	
@@ -43,6 +46,7 @@ public class ToDoMainActivity extends Activity {
 	
 	private static final String TODO_FILENAME = "todos.txt";
 	private static final int REQUEST_CODE = 20;
+	private static int maxRecordId = -1;
 	
 	// Tracks current menu item
 	private int currentListItemIndex = -1;
@@ -79,6 +83,7 @@ public class ToDoMainActivity extends Activity {
 		} else {
 			Todo todo = new Todo();
 			todo.setTitle(newTodo);
+			todo.setId(++maxRecordId);
 			
 			todoItemsAdapter.add(todo);
 //			Even adding item to list auto updates the view.
@@ -123,8 +128,16 @@ public class ToDoMainActivity extends Activity {
 				todo.setFinished(!todo.isFinished());
 				if (!todo.isFinished()) {
 					todo.setFinishDate(null);
+					if (todo.getReminderTS() != null &&
+						todo.getReminderTS().after(Calendar.getInstance())) {
+						NotificationsHelper.scheduleReminderAlarm(ToDoMainActivity.this, todo);
+					}
 				} else {
 					todo.setFinishDate(Calendar.getInstance());
+					if (todo.getReminderTS() != null) {
+						NotificationsHelper.cancelReminderAlarm(ToDoMainActivity.this, todo);
+						NotificationsHelper.clearReminderNotification(ToDoMainActivity.this, todo);
+					}
 				}
 				todoItemsAdapter.notifyDataSetChanged();
 				saveItemsToFile();
@@ -151,16 +164,22 @@ public class ToDoMainActivity extends Activity {
 				while (scanner.hasNext()) {
 					String token = scanner.next();
 					if (count == 0) {
-						todo.setTitle(token);
+						int id = Integer.parseInt(token);
+						todo.setId(id);
+						if (maxRecordId < id) {
+							maxRecordId = id;
+						}
 					} else if (count == 1) {
-						todo.setFinished(Boolean.parseBoolean(token));
+						todo.setTitle(token);
 					} else if (count == 2) {
-						todo.setDueDateSet(Boolean.parseBoolean(token));
+						todo.setFinished(Boolean.parseBoolean(token));
 					} else if (count == 3) {
+						todo.setDueDateSet(Boolean.parseBoolean(token));
+					} else if (count == 4) {
 						Calendar dueDate = Calendar.getInstance();
 						dueDate.setTimeInMillis(Long.parseLong(token));
 						todo.setDueDate(dueDate);
-					} else if (count == 4) {
+					} else if (count == 5) {
 						long finishMs = Long.parseLong(token);
 						if (finishMs == 0) {
 							todo.setFinishDate(null);
@@ -169,7 +188,7 @@ public class ToDoMainActivity extends Activity {
 							finishDate.setTimeInMillis(finishMs);
 							todo.setFinishDate(finishDate);
 						}
-					} else if (count == 5) {
+					} else if (count == 6) {
 						long reminderMS = Long.parseLong(token);
 						if (reminderMS == 0) {
 							todo.setReminderTS(null);
@@ -215,23 +234,25 @@ public class ToDoMainActivity extends Activity {
 			Todo newTodo = (Todo) data.getExtras().get(TODO_ITEM);
 			
 			todoItemsAdapter.insert(newTodo, itemPos);
-			todoList.remove(itemPos + 1);
+			Todo oldTodo = todoList.remove(itemPos + 1);
 			todoItemsAdapter.notifyDataSetChanged();
 			saveItemsToFile();
 			
-			if (newTodo.getReminderTS() != null) {
-				Calendar calendar = newTodo.getReminderTS();
-				Intent todoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newTodo.getTitle()), ToDoMainActivity.this, TodoAlarmReceiver.class);
-				todoIntent.putExtra(TODO_ITEM, newTodo);
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(ToDoMainActivity.this, 0, todoIntent, 0);
-				
-				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-				alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+			if (oldTodo.getReminderTS() != null &&
+				newTodo.getReminderTS() != null &&
+				oldTodo.getReminderTS().getTimeInMillis() != newTodo.getReminderTS().getTimeInMillis()) {
+
+				NotificationsHelper.clearReminderNotification(this, oldTodo);
+				NotificationsHelper.scheduleReminderAlarm(this, newTodo);
+			} else if (oldTodo.getReminderTS() != null && newTodo.getReminderTS() == null) {
+				NotificationsHelper.cancelReminderAlarm(this, oldTodo);
+				NotificationsHelper.clearReminderNotification(this, oldTodo);
+			} else if (oldTodo.getReminderTS() == null && newTodo.getReminderTS() != null) {
+				NotificationsHelper.scheduleReminderAlarm(this, newTodo);
 			}
 			
 		}
 	}
-	
 	
 	// Define the callback when ActionMode is activated
 	private ActionMode.Callback modeCallBack = new ActionMode.Callback() {
