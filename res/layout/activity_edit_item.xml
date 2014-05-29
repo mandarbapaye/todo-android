@@ -83,24 +83,6 @@
         android:checked="true"
         android:text="@string/remind_me_label" />
 
-    <ImageButton
-        android:id="@+id/btnReminderDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cbReminder"
-        android:layout_below="@+id/cbReminder"
-        android:onClick="showReminderDatePickerDialog"
-        android:src="@drawable/ic_menu_today" />
-
-    <ImageButton
-        android:id="@+id/btnReminderTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/cbReminder"
-        android:layout_alignTop="@+id/btnReminderDate"
-        android:onClick="showReminderTimePickerDialog"
-        android:src="@drawable/ic_menu_day" />
-
     <Button
         android:id="@+id/btnSaveEdit"
         android:layout_width="wrap_content"
@@ -111,22 +93,42 @@
         android:onClick="onItemEdited"
         android:text="@string/save_label" />
 
-    <TextView
-        android:id="@+id/tvReminderDate"
+    <ImageButton
+        android:id="@+id/btnReminderTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvReminderTime"
-        android:layout_toRightOf="@+id/tvDueDateLabel"
-        android:text="@string/empty_label"
+        android:layout_above="@+id/btnSaveEdit"
+        android:layout_alignRight="@+id/etEditItem"
+        android:layout_marginBottom="15dp"
+        android:onClick="showReminderTimePickerDialog"
+        android:src="@drawable/ic_dialog_time" />
+
+    <ImageButton
+        android:id="@+id/btnReminderDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnReminderTime"
+        android:layout_alignLeft="@+id/btnReminderTime"
+        android:onClick="showReminderDatePickerDialog"
+        android:src="@drawable/ic_menu_today" />
+
+    <TextView
+        android:id="@+id/tvDateTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnReminderDate"
+        android:layout_alignRight="@+id/cbReminder"
+        android:text="Date/Time:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/tvReminderTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnReminderTime"
-        android:layout_alignLeft="@+id/tvReminderDate"
-        android:text="@string/empty_label"
+        android:layout_alignRight="@+id/tvDateTimeLabel"
+        android:layout_alignTop="@+id/btnReminderTime"
+        android:layout_marginTop="14dp"
+        android:text="test"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

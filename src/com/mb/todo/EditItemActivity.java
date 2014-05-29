@@ -46,7 +46,7 @@ public class EditItemActivity extends FragmentActivity implements DatePickerFrag
 	private int editItemPos;
 	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-	private SimpleDateFormat reminderDateFormat = new SimpleDateFormat("yyyy-MM-dd '@' HH:mm z", Locale.US);
+	private SimpleDateFormat reminderDateFormat = new SimpleDateFormat("yyyy-MM-dd '@' HH:mm", Locale.US);
 	
 	private boolean chooseDueDate = false;
 	private boolean chooseReminderDate = false;

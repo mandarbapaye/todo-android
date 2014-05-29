@@ -222,6 +222,7 @@ public class ToDoMainActivity extends Activity {
 			if (newTodo.getReminderTS() != null) {
 				Calendar calendar = newTodo.getReminderTS();
 				Intent todoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newTodo.getTitle()), ToDoMainActivity.this, TodoAlarmReceiver.class);
+				todoIntent.putExtra(TODO_ITEM, newTodo);
 				PendingIntent pendingIntent = PendingIntent.getBroadcast(ToDoMainActivity.this, 0, todoIntent, 0);
 				
 				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
