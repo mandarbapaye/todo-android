@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvDueDateLabel"
         android:layout_alignTop="@+id/btnCalendar"
-        android:text="Date:"
+        android:text="@string/date_label"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/darker_gray" />
 
@@ -70,6 +70,7 @@
         android:layout_alignLeft="@+id/cbDueDate"
         android:layout_below="@+id/cbDueDate"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/chooseDateDescr_label"
         android:onClick="showDueDatePickerDialog"
         android:src="@drawable/ic_menu_today" />
 
@@ -100,6 +101,7 @@
         android:layout_above="@+id/btnSaveEdit"
         android:layout_alignRight="@+id/etEditItem"
         android:layout_marginBottom="15dp"
+        android:contentDescription="@string/chooseTimeDescr_label"
         android:onClick="showReminderTimePickerDialog"
         android:src="@drawable/ic_dialog_time" />
 
@@ -109,6 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnReminderTime"
         android:layout_alignLeft="@+id/btnReminderTime"
+        android:contentDescription="@string/chooseDateDescr_label"
         android:onClick="showReminderDatePickerDialog"
         android:src="@drawable/ic_menu_today" />
 
@@ -118,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/btnReminderDate"
         android:layout_alignRight="@+id/cbReminder"
-        android:text="Date/Time:"
+        android:text="@string/dateTime_label"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -128,7 +131,7 @@
         android:layout_alignRight="@+id/tvDateTimeLabel"
         android:layout_alignTop="@+id/btnReminderTime"
         android:layout_marginTop="14dp"
-        android:text="test"
+        android:text="@string/noDateSet_label"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

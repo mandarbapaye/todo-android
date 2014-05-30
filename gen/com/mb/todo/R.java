@@ -71,6 +71,9 @@ public final class R {
         public static final int add_item_hint_label=0x7f050004;
         public static final int add_label=0x7f050003;
         public static final int app_name=0x7f050000;
+        public static final int chooseDateDescr_label=0x7f050014;
+        public static final int chooseTimeDescr_label=0x7f050015;
+        public static final int dateTime_label=0x7f050013;
         public static final int date_label=0x7f050010;
         public static final int delete_lable=0x7f050009;
         public static final int edit_finished_tasks_label=0x7f05000b;
@@ -82,7 +85,6 @@ public final class R {
         public static final int noDateSet_label=0x7f05000e;
         public static final int noDueDate_label=0x7f05000d;
         public static final int remind_me_label=0x7f050011;
-        public static final int reminder_label=0x7f050013;
         public static final int save_label=0x7f050007;
         public static final int setDueDate_label=0x7f05000c;
         public static final int title_activity_edit_item=0x7f050005;

@@ -20,6 +20,8 @@
     <string name="date_label">Date:</string>
     <string name="remind_me_label">Remind Me</string>
     <string name="empty_label"></string>
-    <string name="reminder_label">Reminder: </string>
+    <string name="dateTime_label">Date/Time:</string>
+    <string name="chooseDateDescr_label">Choose Date</string>
+    <string name="chooseTimeDescr_label">Choose Time</string>
     
 </resources>
