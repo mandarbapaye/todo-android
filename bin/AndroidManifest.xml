@@ -7,7 +7,9 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
-
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_checkmark_holo_light"
@@ -28,6 +30,13 @@
         </activity>
         
         <receiver android:name="com.mb.todo.notifications.TodoAlarmReceiver"/>
+        <receiver android:name="com.mb.todo.notifications.BootReceiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED">
+                </action>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

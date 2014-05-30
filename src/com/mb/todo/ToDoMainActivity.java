@@ -1,6 +1,7 @@
 package com.mb.todo;
 
 import static com.mb.todo.Constants.ITEM_POS_INTENT_PARAM;
+import static com.mb.todo.Constants.TODO_FILENAME;
 import static com.mb.todo.Constants.TODO_ITEM;
 
 import java.io.File;
@@ -13,13 +14,8 @@ import java.util.Scanner;
 import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -35,7 +31,6 @@ import android.widget.Toast;
 import com.mb.todo.adapter.TwolineAdapter;
 import com.mb.todo.model.Todo;
 import com.mb.todo.notifications.NotificationsHelper;
-import com.mb.todo.notifications.TodoAlarmReceiver;
 
 public class ToDoMainActivity extends Activity {
 	
@@ -44,7 +39,6 @@ public class ToDoMainActivity extends Activity {
 	private EditText etNewItem;
 	private ListView lvItems;
 	
-	private static final String TODO_FILENAME = "todos.txt";
 	private static final int REQUEST_CODE = 20;
 	private static int maxRecordId = -1;
 	
