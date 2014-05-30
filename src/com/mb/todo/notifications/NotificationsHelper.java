@@ -14,6 +14,10 @@ import com.mb.todo.model.Todo;
 public class NotificationsHelper {
 	
 	public static void scheduleReminderAlarm(Context context, Todo todo) {
+		if (todo.isFinished()) {
+			return;
+		}
+		
 		Intent todoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(todo.getId())), context, TodoAlarmReceiver.class);
 		todoIntent.putExtra(TODO_ITEM, todo);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, todoIntent, 0);
@@ -33,6 +37,10 @@ public class NotificationsHelper {
 	}
 	
 	public static void launchReminderNotification(Context context, Notification notification, Todo todo) {
+		if (todo.isFinished()) {
+			return;
+		}
+		
 		getAndroidNotificationManager(context).notify(todo.getId(), notification);
 	}
 
